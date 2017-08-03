@@ -13,9 +13,10 @@ class MainContainer extends Component {
     };
   };
 
-  componentDidMount() {
+  getRecentMedia() {
     axios.get('/api/recentmedia')
       .then(response => {
+      console.log(response);
         this.setState({
           photos: response.data,
           user: response.data[0].user
@@ -26,13 +27,39 @@ class MainContainer extends Component {
       });
   };
 
+  loginToInsta(){
+    axios.get('/api/authorize_user')
+      .then(response => {
+      console.log(response);
+      this.getRecentMedia();
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+  }
+
+  componentDidMount() {
+
+    axios.get('/api/login_check')
+      .then(response => {
+        console.log(response.data);
+        if (response.data){
+          this.getRecentMedia();
+        } else {
+          this.loginToInsta();
+        }
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+  };
+
+
   render(){
     console.log(this.state.photos);
     return (
       <div>
         <Menu data={this.state.user} />
-        <h1> Hello from React</h1>
-
         <PhotoList data={this.state.photos} />
       </div>
     );

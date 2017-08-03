@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Photo as styles  } from '../styles/Styles';
 
 const Photo = props => {
 
@@ -15,8 +16,8 @@ const Photo = props => {
     };
 
   return (
-    <li className='photo-wrap'>
-      <img src={props.images.thumbnail.url} onClick={handleClick} alt='' />
+    <li style={styles.li} className='photo-wrap'>
+      <img style={styles.img} src={props.images.thumbnail.url} onClick={handleClick} alt='' />
     </li>
   );
 };

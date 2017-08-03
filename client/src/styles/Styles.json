@@ -1,0 +1,49 @@
+{
+  "Menu": {
+    "primary": {
+      "display": "block",
+      "background": "#f9f9f9",
+      "borderBottom": "1px solid #f0f0f0"
+    },
+    "img": {
+      "display": "inline-block",
+      "height": 60,
+      "margin": 15,
+      "verticalAlign": "middle",
+      "borderRadius": "50%"
+    },
+    "h3": {
+      "display": "inline-block",
+      "lineHeight": "normal",
+      "verticalAlign": "middle"
+    },
+    "logoutDiv": {
+      "float": "right",
+      "display": "inline-block",
+      "verticalAlign": "middle"
+    }
+  },
+  "Photo": {
+    "li": {
+      "display": "inline",
+      "listStyleType": "none"
+    },
+    "img": {
+      "margin": 10
+    }
+  },
+  "PhotoList": {
+    "centerAll": {
+      "display": "flex",
+      "alignItems": "center",
+      "justifyContent": "center"
+    },
+    "photoList": {
+      "padding": "0"
+    },
+    "photoRow": {
+      "display": "inline",
+      "padding": "0"
+    }
+  }
+}

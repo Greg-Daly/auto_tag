@@ -24,10 +24,18 @@ instagram.use({
   client_secret: keys.client_secret
   });
 
+app.get('/api/login_check', (req, res) => {
+  if (req.cookies.insta_access_token) {
+    res.json(true)
+  } else {
+    res.json(false)
+  }
+});
+
 app.get('/api/authorize_user', (req, res) => {
   res.redirect(instagram.get_authorization_url(redirect_uri, { scope: ['likes'], state: 'a state' }));
 });
-// This is your redirect URI
+
 app.get('/handleauth', (req, res) => {
   instagram.authorize_user(req.query.code, redirect_uri, (err, result) => {
     if (err) {
@@ -72,7 +80,9 @@ app.get('/api/findtags', (req, res) => {
 });
 
 app.post('/api/logout', (req, res) => {
-  req.clearCookie('insta_access_token')
+  res.clearCookie('insta_access_token');
+  req.session.destroy();
+  console.log('clearCookie');
 });
 
 app.get('*', (req, res) => {
