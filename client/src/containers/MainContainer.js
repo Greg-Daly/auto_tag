@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
+import Modal from 'react-modal';
 import axios from 'axios';
 import PhotoList from '../components/PhotoList';
 import Menu from '../components/Menu';
+
+
 
 class MainContainer extends Component {
 
@@ -9,17 +12,22 @@ class MainContainer extends Component {
     super();
     this.state = {
       photos: [],
-      user: []
+      user: [],
+      modalIsOpen: false,
+      hasErrored: false,
+      isLoading: false,
     };
   };
 
   getRecentMedia() {
+    this.setState({isLoading: true})
     axios.get('/api/recentmedia')
       .then(response => {
-      console.log(response);
+        console.log(response);
         this.setState({
           photos: response.data,
-          user: response.data[0].user
+          user: response.data[0].user,
+          isLoading: false
         });
       })
       .catch(error => {
@@ -36,10 +44,13 @@ class MainContainer extends Component {
       .catch(error => {
         console.log('Error fetching and parsing data', error);
       });
+  };
+
+  selectPhoto(){
+    state.modalIsOpen = true;
   }
 
   componentDidMount() {
-
     axios.get('/api/login_check')
       .then(response => {
         console.log(response.data);
@@ -57,10 +68,27 @@ class MainContainer extends Component {
 
   render(){
     console.log(this.state.photos);
+
+    if(this.state.hasErrored) {
+      return  (
+        <p>Sorry, there was an error loading photos.</p>
+      )
+    } else if ( this.state.isLoading) {
+      return (
+        <p>Loading...</p>
+      )
+    };
+
     return (
       <div>
         <Menu data={this.state.user} />
         <PhotoList data={this.state.photos} />
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          contentLabel="Modal"
+          >
+          <img src='https://scontent.cdninstagram.com/t51.2885-15/sh0.08/e35/p640x640/20759257_1958498067727185_4787047432884060160_n.jpg'/>
+        </Modal>
       </div>
     );
   }
