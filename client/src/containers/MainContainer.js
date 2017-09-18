@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { photosFetchData } from '../../actions/photos';
 import Modal from 'react-modal';
 import axios from 'axios';
 import PhotoList from '../components/PhotoList';
@@ -14,32 +16,14 @@ class MainContainer extends Component {
       photos: [],
       user: [],
       modalIsOpen: false,
-      hasErrored: false,
-      isLoading: false,
     };
-  };
-
-  getRecentMedia() {
-    this.setState({isLoading: true})
-    axios.get('/api/recentmedia')
-      .then(response => {
-        console.log(response);
-        this.setState({
-          photos: response.data,
-          user: response.data[0].user,
-          isLoading: false
-        });
-      })
-      .catch(error => {
-        console.log('Error fetching and parsing data', error);
-      });
   };
 
   loginToInsta(){
     axios.get('/api/authorize_user')
       .then(response => {
       console.log(response);
-      this.getRecentMedia();
+      this.props.fetchData('/api/recentmedia');
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
@@ -55,7 +39,7 @@ class MainContainer extends Component {
       .then(response => {
         console.log(response.data);
         if (response.data){
-          this.getRecentMedia();
+          this.props.fetchData('/api/recentmedia');
         } else {
           this.loginToInsta();
         }
@@ -67,13 +51,11 @@ class MainContainer extends Component {
 
 
   render(){
-    console.log(this.state.photos);
-
-    if(this.state.hasErrored) {
+    if(this.props.hasErrored) {
       return  (
         <p>Sorry, there was an error loading photos.</p>
       )
-    } else if ( this.state.isLoading) {
+    } else if (this.props.isLoading) {
       return (
         <p>Loading...</p>
       )
@@ -82,7 +64,7 @@ class MainContainer extends Component {
     return (
       <div>
         <Menu data={this.state.user} />
-        <PhotoList data={this.state.photos} />
+        <PhotoList data={this.props.photos} />
         <Modal
           isOpen={this.state.modalIsOpen}
           contentLabel="Modal"
@@ -94,4 +76,19 @@ class MainContainer extends Component {
   }
 };
 
-export default MainContainer;
+const mapStateToProps = (state) => {
+  return {
+    photos: state.photos,
+    hasErrored: state.hasErrored,
+    isLoading: state.isLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: (url) => dispatch(photosFetchData(url))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)
+(MainContainer);

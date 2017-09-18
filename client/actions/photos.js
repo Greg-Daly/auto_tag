@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function photosHasErrored(bool) {
     return {
         type: 'PHOTOS_HAS_ERRORED',
@@ -33,16 +35,21 @@ export function photosFetchData(url) {
     return (dispatch) => {
         dispatch(photosIsLoading(true));
 
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                dispatch(photosIsLoading(false));
-                return response;
-            })
-            .then((response) => response.json())
-            .then((photos) => dispatch(photosFetchDataSuccess(photos)))
-            .catch(() => dispatch(photosHasErrored(true)));
+        axios.get(url)
+          .then(response => {
+            console.log(response);
+            if (response.statusText != "OK") {
+                throw Error(response.statusText);
+            }
+            dispatch(photosIsLoading(false));
+            return response;
+          })
+          .then((response) => response.data)
+          .then((photos) => dispatch(photosFetchDataSuccess(photos)))
+          .catch(error => {
+            console.log('Error fetching and parsing data', error);
+            dispatch(photosHasErrored(true));
+          });
+          
     };
 }

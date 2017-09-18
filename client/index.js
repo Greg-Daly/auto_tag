@@ -8,7 +8,7 @@ import MainContainer from './src/containers/MainContainer';
 const store= configureStore();
 
 render(
-  <Provider store={store}
+  <Provider store={store}>
     <MainContainer/>
   </Provider>,
   document.getElementById('root')
