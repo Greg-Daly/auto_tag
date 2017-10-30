@@ -4,14 +4,14 @@ import { PhotoList as styles  } from '../styles/Styles';
 
 const PhotoList = props => {
 
-  const results = props.data;
+  const results = props.data.photos;
   let photos;
   let row_1;
   let row_2;
   let row_3;
   if(results.length > 0) {
     photos = results.map(photo =>
-      <Photo images={photo.images} key={photo.id} />
+      <Photo images={photo.images} key={photo.id} data={props.data} />
     );
     row_1 = photos.slice(0,3);
     row_2 = photos.slice(3,6);
@@ -19,6 +19,16 @@ const PhotoList = props => {
   } else{
     console.log("There are no photos");
   }
+
+  if(props.data.hasErrored) {
+    return  (
+      <p>Sorry, there was an error loading photos.</p>
+    )
+  } else if (props.data.photosIsLoading) {
+    return (
+      <p>Loading...</p>
+    );
+  };
 
   return(
     <div style={styles.centerAll}>

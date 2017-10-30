@@ -5,14 +5,14 @@ import { Menu as styles  } from '../styles/Styles';
 const Menu = props => {
 
   const handleClick = (event) => {
-      axios.post('/api/logout')
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log('Error fetching and parsing data', error);
-        });
-    };
+    axios.post('/api/logout')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+  };
 
   return(
     <div style={styles.primary} className='top-menu'>

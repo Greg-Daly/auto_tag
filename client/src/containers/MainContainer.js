@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { photosFetchData } from '../../actions/photos';
+import { tagsFetchData } from '../../actions/tags';
 import Modal from 'react-modal';
 import axios from 'axios';
 import PhotoList from '../components/PhotoList';
@@ -13,33 +14,29 @@ class MainContainer extends Component {
   constructor() {
     super();
     this.state = {
-      photos: [],
       user: [],
-      modalIsOpen: false,
+      modalIsOpen: false
     };
   };
 
   loginToInsta(){
+    console.log("loginToInsta starting");
     axios.get('/api/authorize_user')
       .then(response => {
       console.log(response);
-      this.props.fetchData('/api/recentmedia');
+//      this.props.fetchData('/api/recentmedia');
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
       });
   };
 
-  selectPhoto(){
-    state.modalIsOpen = true;
-  }
-
   componentDidMount() {
     axios.get('/api/login_check')
       .then(response => {
-        console.log(response.data);
+        console.log("login_check is: " + response.data);
         if (response.data){
-          this.props.fetchData('/api/recentmedia');
+          this.props.fetchPhotos();
         } else {
           this.loginToInsta();
         }
@@ -49,22 +46,15 @@ class MainContainer extends Component {
       });
   };
 
-
   render(){
-    if(this.props.hasErrored) {
-      return  (
-        <p>Sorry, there was an error loading photos.</p>
-      )
-    } else if (this.props.isLoading) {
-      return (
-        <p>Loading...</p>
-      )
+    if (this.props.photos[1]) {
+      this.state.user = this.props.photos[1].user;
     };
 
     return (
       <div>
         <Menu data={this.state.user} />
-        <PhotoList data={this.props.photos} />
+        <PhotoList data={this.props} />
         <Modal
           isOpen={this.state.modalIsOpen}
           contentLabel="Modal"
@@ -79,14 +69,15 @@ class MainContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     photos: state.photos,
-    hasErrored: state.hasErrored,
-    isLoading: state.isLoading
+    photosHasErrored: state.photosHasErrored,
+    photosIsLoading: state.photosIsLoading
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: (url) => dispatch(photosFetchData(url))
+    fetchPhotos: () => dispatch(photosFetchData()),
+    fetchTags: (photoURL) => dispatch(tagsFetchData(photoURL))
   };
 };
 

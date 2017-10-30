@@ -25,26 +25,25 @@ instagram.use({
   });
 
 app.get('/api/login_check', (req, res) => {
-  if (req.cookies.insta_access_token) {
-    res.json(true)
-  } else {
-    res.json(false)
-  }
+  res.json(req.cookies.insta_access_token);
 });
 
 app.get('/api/authorize_user', (req, res) => {
+  console.log("Authorizing User");
   res.redirect(instagram.get_authorization_url(redirect_uri, { scope: ['likes'], state: 'a state' }));
 });
 
 app.get('/handleauth', (req, res) => {
+  console.log("Handleing Auth");
   instagram.authorize_user(req.query.code, redirect_uri, (err, result) => {
     if (err) {
-      console.log(err.body);
+      console.log(err);
       res.send("Didn't work");
     } else {
       console.log('Yay! Access token is ' + result.access_token);
       res.cookie('insta_access_token', result.access_token);
       instagram.use({access_token: result.access_token});
+      res.redirect('/');
     }
   });
 });
@@ -54,7 +53,6 @@ app.get('/api/recentmedia', (req, res) => {
   instagram.user_self_media_recent(
     {count: 12},
     (err, medias, pagination, remaining, limit) => {
-//      console.log(medias);
       res.json(medias);
     });
 });

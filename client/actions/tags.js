@@ -1,23 +1,23 @@
 import axios from 'axios';
 
-export function photosHasErrored(bool) {
+export function tagsHasErrored(bool) {
     return {
-        type: 'PHOTOS_HAS_ERRORED',
-        hasErrored: bool
+        type: 'TAGS_HAS_ERRORED',
+        tagsHasErrored: bool
     };
 }
 
-export function photosIsLoading(bool) {
+export function tagsIsLoading(bool) {
     return {
-        type: 'PHOTOS_IS_LOADING',
-        isLoading: bool
+        type: 'TAGS_IS_LOADING',
+        tagsIsLoading: bool
     };
 }
 
-export function photosFetchDataSuccess(photos) {
+export function tagsFetchDataSuccess(tags) {
     return {
-        type: 'PHOTOS_FETCH_DATA_SUCCESS',
-        photos
+        type: 'TAGS_FETCH_DATA_SUCCESS',
+        tags
     };
 }
 
@@ -26,29 +26,29 @@ export function errorAfterFiveSeconds() {
     return (dispatch) => {
         setTimeout(() => {
             // This function is able to dispatch other action creators
-            dispatch(photosHasErrored(true));
+            dispatch(tagsHasErrored(true));
         }, 5000);
     };
 }
 
-export function photosFetchData() {
+export function tagsFetchData(photoURL) {
     return (dispatch) => {
-        dispatch(photosIsLoading(true));
+        dispatch(tagsIsLoading(true));
 
-        axios.get('/api/recentmedia')
+        axios.get('/api/findtags?img_url='+photoURL)
           .then(response => {
             console.log(response);
             if (response.statusText != "OK") {
                 throw Error(response.statusText);
             }
-            dispatch(photosIsLoading(false));
+            dispatch(tagsIsLoading(false));
             return response;
           })
           .then((response) => response.data)
-          .then((photos) => dispatch(photosFetchDataSuccess(photos)))
+          .then((tags) => dispatch(tagsFetchDataSuccess(tags)))
           .catch(error => {
             console.log('Error fetching and parsing data', error);
-            dispatch(photosHasErrored(true));
+            dispatch(tagsHasErrored(true));
           });
 
     };

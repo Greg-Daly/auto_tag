@@ -1,19 +1,12 @@
-import React from 'react';
-import axios from 'axios';
 import { Photo as styles  } from '../styles/Styles';
 
 const Photo = props => {
 
+  console.log(props);
+
   const handleClick = (event) => {
-      console.log(props.images.standard_resolution.url);
-      axios.get('/api/findtags?img_url='+props.images.standard_resolution.url)
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log('Error fetching and parsing data', error);
-        });
-    };
+    props.data.fetchTags(props.images.standard_resolution.url)
+  };
 
   return (
     <li style={styles.li} className='photo-wrap'>
