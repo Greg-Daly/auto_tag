@@ -20,7 +20,7 @@ const PhotoList = props => {
     console.log("There are no photos");
   }
 
-  if(props.data.hasErrored) {
+  if(props.data.photosHasErrored) {
     return  (
       <p>Sorry, there was an error loading photos.</p>
     )
