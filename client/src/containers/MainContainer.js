@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { photosFetchData } from '../../actions/photos';
 import { tagsFetchData } from '../../actions/tags';
+import { modalIsOpen } from '../../actions/modal';
 import Modal from 'react-modal';
 import axios from 'axios';
 import PhotoList from '../components/PhotoList';
 import Menu from '../components/Menu';
+import InsideModal from './InsideModal'
 
 
 
@@ -14,8 +16,7 @@ class MainContainer extends Component {
   constructor() {
     super();
     this.state = {
-      user: [],
-      modalIsOpen: false
+      user: []
     };
   };
 
@@ -56,10 +57,10 @@ class MainContainer extends Component {
         <Menu data={this.state.user} />
         <PhotoList data={this.props} />
         <Modal
-          isOpen={this.state.modalIsOpen}
+          isOpen={this.props.modalIsOpen}
           contentLabel="Modal"
           >
-          <img src='https://scontent.cdninstagram.com/t51.2885-15/sh0.08/e35/p640x640/20759257_1958498067727185_4787047432884060160_n.jpg'/>
+          <InsideModal data={this.props}/>
         </Modal>
       </div>
     );
@@ -70,14 +71,19 @@ const mapStateToProps = (state) => {
   return {
     photos: state.photos,
     photosHasErrored: state.photosHasErrored,
-    photosIsLoading: state.photosIsLoading
+    photosIsLoading: state.photosIsLoading,
+    tags: state.tags,
+    tagsHasErrored: state.tagsHasErrored,
+    tagsIsLoading: state.tagsIsLoading,
+    modalIsOpen: state.modalIsOpen
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchPhotos: () => dispatch(photosFetchData()),
-    fetchTags: (photoURL) => dispatch(tagsFetchData(photoURL))
+    fetchTags: (photoURL) => dispatch(tagsFetchData(photoURL)),
+    open: (bool) => dispatch(modalIsOpen(bool))
   };
 };
 

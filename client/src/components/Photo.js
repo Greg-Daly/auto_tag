@@ -1,11 +1,11 @@
+import React from 'react';
 import { Photo as styles  } from '../styles/Styles';
 
 const Photo = props => {
 
-  console.log(props);
-
   const handleClick = (event) => {
-    props.data.fetchTags(props.images.standard_resolution.url)
+    props.data.fetchTags(props.images.standard_resolution.url);
+    props.data.open(true, props.images.standard_resolution.url);
   };
 
   return (

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { photos, photosHasErrored, photosIsLoading } from './photos';
 import { tags, tagsHasErrored, tagsIsLoading } from './tags';
-import { openModal, closeModal } from './modal';
+import { modalIsOpen } from './modal';
 
 export default combineReducers({
   photos,
@@ -10,6 +10,5 @@ export default combineReducers({
   tags,
   tagsHasErrored,
   tagsIsLoading,
-  openModal,
-  closeModal
+  modalIsOpen
 });

@@ -1,14 +1,6 @@
-export function openModal(bool, photoUrl) {
+export function modalIsOpen(bool) {
     return {
-        type: 'OPEN_MODAL',
-        modalIsopen: bool
-        modalPhoto: photoUrl
-    };
-}
-
-export function closeModal(bool) {
-    return {
-        type: 'CLOSE_MODAL',
-        hasErrored: bool
+        type: 'MODAL_IS_OPEN',
+        modalIsOpen: bool
     };
 }

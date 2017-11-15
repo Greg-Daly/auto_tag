@@ -45,5 +45,10 @@
       "display": "inline",
       "padding": "0"
     }
+  },
+  "InsideModal": {
+    "closeModal": {
+      "src" : "require(../icons/close.png)"
+    }
   }
 }
