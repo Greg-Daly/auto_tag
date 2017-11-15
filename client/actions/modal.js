@@ -4,3 +4,17 @@ export function modalIsOpen(bool) {
         modalIsOpen: bool
     };
 }
+
+export function currentPhoto(currentPhoto) {
+    return {
+        type: 'CURRENT_PHOTO',
+        currentPhoto
+    };
+}
+
+export function toggleModel(bool, photo) {
+    return (dispatch) => {
+        dispatch(modalIsOpen(bool));
+        dispatch(currentPhoto(photo));
+    };
+}

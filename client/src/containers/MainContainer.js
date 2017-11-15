@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { photosFetchData } from '../../actions/photos';
 import { tagsFetchData } from '../../actions/tags';
-import { modalIsOpen } from '../../actions/modal';
+import { toggleModel } from '../../actions/modal';
 import Modal from 'react-modal';
 import axios from 'axios';
 import PhotoList from '../components/PhotoList';
@@ -75,7 +75,8 @@ const mapStateToProps = (state) => {
     tags: state.tags,
     tagsHasErrored: state.tagsHasErrored,
     tagsIsLoading: state.tagsIsLoading,
-    modalIsOpen: state.modalIsOpen
+    modalIsOpen: state.modalIsOpen,
+    currentPhoto: state.currentPhoto
   };
 };
 
@@ -83,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchPhotos: () => dispatch(photosFetchData()),
     fetchTags: (photoURL) => dispatch(tagsFetchData(photoURL)),
-    open: (bool) => dispatch(modalIsOpen(bool))
+    open: (bool, photo) => dispatch(toggleModel(bool, photo))
   };
 };
 

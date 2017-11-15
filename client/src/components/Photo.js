@@ -5,7 +5,7 @@ const Photo = props => {
 
   const handleClick = (event) => {
     props.data.fetchTags(props.images.standard_resolution.url);
-    props.data.open(true, props.images.standard_resolution.url);
+    props.data.open(true, props.photo);
   };
 
   return (

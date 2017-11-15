@@ -11,7 +11,7 @@ const PhotoList = props => {
   let row_3;
   if(results.length > 0) {
     photos = results.map(photo =>
-      <Photo images={photo.images} key={photo.id} data={props.data} />
+      <Photo images={photo.images} key={photo.id} photo={photo} data={props.data} />
     );
     row_1 = photos.slice(0,3);
     row_2 = photos.slice(3,6);
