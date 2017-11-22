@@ -47,8 +47,33 @@
     }
   },
   "InsideModal": {
+    "X":{
+      "float": "right"
+    },
+    "wrapperDiv":{
+      "display": "inline-block"
+    },
+    "ul":{
+      "display": "table",
+      "alignItems": "center",
+      "justifyContent": "center"
+    },
+    "li": {
+      "display": "inline table-cell",
+      "listStyleType": "none",
+      "verticalAlign": "middle"
+    },
     "closeModal": {
-      "src" : "require(../icons/close.png)"
+      "src": "require(../icons/close.png)"
+    },
+    "img": {
+      "maxHeight": "500px"
+    }
+  },
+  "modal": {
+    "content":{
+      "margin": "auto",
+      "width": "fit-content"
     }
   }
 }

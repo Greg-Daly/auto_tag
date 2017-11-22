@@ -7,9 +7,8 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import PhotoList from '../components/PhotoList';
 import Menu from '../components/Menu';
-import InsideModal from './InsideModal'
-
-
+import InsideModal from './InsideModal';
+import Styles from '../styles/Styles';
 
 class MainContainer extends Component {
 
@@ -59,6 +58,7 @@ class MainContainer extends Component {
         <Modal
           isOpen={this.props.modalIsOpen}
           contentLabel="Modal"
+          style={Styles.modal}
           >
           <InsideModal data={this.props}/>
         </Modal>
