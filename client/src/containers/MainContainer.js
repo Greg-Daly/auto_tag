@@ -24,7 +24,6 @@ class MainContainer extends Component {
     axios.get('/api/authorize_user')
       .then(response => {
       console.log(response);
-//      this.props.fetchData('/api/recentmedia');
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
@@ -47,6 +46,7 @@ class MainContainer extends Component {
   };
 
   render(){
+    //TODO: take out this if statement and add an initial state
     if (this.props.photos[1]) {
       this.state.user = this.props.photos[1].user;
     };

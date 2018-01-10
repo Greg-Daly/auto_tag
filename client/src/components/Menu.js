@@ -5,7 +5,7 @@ import { Menu as styles  } from '../styles/Styles';
 const Menu = props => {
 
   const handleClick = (event) => {
-    axios.post('/api/logout')
+    axios.get('/api/logout')
       .then(response => {
         console.log(response);
       })

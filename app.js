@@ -67,8 +67,6 @@ app.get('/api/findtags', (req, res) => {
     source: {imageUri: req.query.img_url}
   };
   vision.labelDetection(image).then(response => {
-    // doThingsWith(response);
-    console.log(response[0].labelAnnotations);
     res.json(response[0].labelAnnotations);
   }).catch(err => {
     console.error(err);
@@ -77,7 +75,7 @@ app.get('/api/findtags', (req, res) => {
 
 });
 
-app.post('/api/logout', (req, res) => {
+app.get('/api/logout', (req, res) => {
   res.clearCookie('insta_access_token');
   req.session.destroy();
   console.log('clearCookie');

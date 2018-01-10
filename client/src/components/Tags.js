@@ -6,7 +6,7 @@ const Tags = props => {
   let tagsList;
 
   if (tagsResult.length > 0) {
-    tagsList = tagsResult.map(tag => "#"+tag.description.replace(/\s/g, ''))
+    tagsList = tagsResult.map(tag => "#"+tag.description.replace(/\s/g, '')+" ")
   }
 
   if(props.data.tagsIsLoading) {

@@ -37,7 +37,6 @@ export function tagsFetchData(photoURL) {
 
         axios.get('/api/findtags?img_url='+photoURL)
           .then(response => {
-            console.log(response);
             if (response.statusText != "OK") {
                 throw Error(response.statusText);
             }
